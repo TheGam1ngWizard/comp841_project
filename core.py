@@ -30,43 +30,6 @@ class TicTacToe:
             self.play_move(player, block_num)
 
 
-    def current_board(self):
-        # Check horizontals
-        if (self.tic_tac_board[0][0] == self.tic_tac_board[0][1] and self.tic_tac_board[0][1] == self.tic_tac_board[0][2] and self.tic_tac_board[0][0] != ' '):
-            return "Done"
-        if (self.tic_tac_board[1][0] == self.tic_tac_board[1][1] and self.tic_tac_board[1][1] == self.tic_tac_board[1][2] and self.tic_tac_board[1][0] != ' '):
-            return "Done"
-        if (self.tic_tac_board[2][0] == self.tic_tac_board[2][1] and self.tic_tac_board[2][1] == self.tic_tac_board[2][2] and self.tic_tac_board[2][0] != ' '):
-            return "Done"
-
-        # Check verticals
-        if (self.tic_tac_board[0][0] == self.tic_tac_board[1][0] and self.tic_tac_board[1][0] == self.tic_tac_board[2][0] and self.tic_tac_board[0][0] != ' '):
-            return "Done"
-        if (self.tic_tac_board[0][1] == self.tic_tac_board[1][1] and self.tic_tac_board[1][1] == self.tic_tac_board[2][1] and self.tic_tac_board[0][1] != ' '):
-            return "Done"
-        if (self.tic_tac_board[0][2] == self.tic_tac_board[1][2] and self.tic_tac_board[1][2] == self.tic_tac_board[2][2] and self.tic_tac_board[0][2] != ' '):
-            return "Done"
-
-        # Check diagonals
-        if (self.tic_tac_board[0][0] == self.tic_tac_board[1][1] and self.tic_tac_board[1][1] == self.tic_tac_board[2][2] and self.tic_tac_board[0][0] != ' '):
-            return "Done"
-        if (self.tic_tac_board[2][0] == self.tic_tac_board[1][1] and self.tic_tac_board[1][1] == self.tic_tac_board[0][2] and self.tic_tac_board[2][0] != ' '):
-            return "Done"
-
-        '''
-        # Check Draw State
-        should_draw = 0
-        for row in range(3):
-            for col in range(3):
-                if self.tic_tac_board[row][col] == ' ':
-                    should_draw = 1
-        if should_draw == 0:
-            return "Draw"
-        '''
-
-        return "Not Done"
-
-
     def print_board(self):
         print('----------------')
         print('| ' + str(self.tic_tac_board[0][0]) + ' || ' + str(
