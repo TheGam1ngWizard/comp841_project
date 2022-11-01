@@ -120,6 +120,9 @@ class TicTacToe:
             self.print_board()
             current_state = self.current_board()
             
+            # Nick TODO: Theoretical rewrite of the 'win' condition checker.
+            # current_state = win.current_board(self.tic_tac_board)
+
             # debug
             print(str(current_state))
             
