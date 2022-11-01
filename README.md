@@ -1,3 +1,3 @@
 # comp841_project
-# Ari and Nick
+# Ari and Nick and Dylan
 

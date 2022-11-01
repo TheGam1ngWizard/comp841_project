@@ -4,12 +4,13 @@
 # While I could have stolen the minimax code from the above, I actually found this article on it (https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/) that both shows the code, and explains how it works.
 
 # https://geekflare.com/tic-tac-toe-python-code/
-import sys
-import numpy as np
-from math import inf as infinity
-import itertools
-import random
-import time
+# import sys
+# import numpy as np
+# from math import inf as infinity
+# import itertools
+# import random
+# import time
+import is_winner
 
 
 class TicTacToe:
@@ -52,6 +53,7 @@ class TicTacToe:
         if (self.tic_tac_board[2][0] == self.tic_tac_board[1][1] and self.tic_tac_board[1][1] == self.tic_tac_board[0][2] and self.tic_tac_board[2][0] != ' '):
             return "Done"
 
+        '''
         # Check Draw State
         should_draw = 0
         for row in range(3):
@@ -60,6 +62,7 @@ class TicTacToe:
                     should_draw = 1
         if should_draw == 0:
             return "Draw"
+        '''
 
         return "Not Done"
 
@@ -85,8 +88,11 @@ class TicTacToe:
     def run_game(self):
 
         # Startup
-        current_state = "Not Done"
+        current_state = "No winner."
         print(f"New Game!")
+        
+        max_turn = len(self.tic_tac_board) * len(self.tic_tac_board)
+        current_turn = 1
 
         # Show Blank Gameboard
         self.print_board()
@@ -104,7 +110,7 @@ class TicTacToe:
             self.run_game()
 
         # Rungame
-        while current_state == "Not Done":
+        while current_state == "No winner.":
             
             # Choose move (Validated to number)
             choice = input((self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): ")
@@ -118,25 +124,39 @@ class TicTacToe:
             block_choice = int(choice)
             self.play_move(self.players[current_player_idx], block_choice)
             self.print_board()
-            current_state = self.current_board()
+            #current_state = self.current_board()
             
             # Nick TODO: Theoretical rewrite of the 'win' condition checker.
-            # current_state = win.current_board(self.tic_tac_board)
+            current_state = is_winner.check_for_win(self.tic_tac_board)
 
-            # debug
-            print(str(current_state))
             
             # These provide the exact same results
             # print(self.players[current_player_idx])
             # print(str(self.players[current_player_idx]))
+
+            print("current turn: " + str(current_turn))
+            print("max_turn: " + str(max_turn))
             
-            # TODO: Fix 'draw' state/end state problem
-            if current_state == "Not Done":
-                current_player_idx = (current_player_idx + 1) % 2
-            elif current_state == "Done":
-                print(self.players[current_player_idx] + " won!")
+            if str(current_turn) == str(max_turn):
+                current_state == "Draw!"
+                break
             else:
-                print("Draw!")
+                current_turn +=1
+
+            # debug
+            print(str(current_state))
+            # print(str(current_turn))
+
+            # TODO: Fix 'draw' state/end state problem
+            if current_state == "No winner.":
+                current_player_idx = (current_player_idx + 1) % 2
+        
+        if current_state == "X":
+            print(self.players[current_player_idx] + " won!")
+        elif current_state == "O":
+            print(self.players[current_player_idx] + " won!")
+        else:
+            print("Draw!")
                 
                 
 
