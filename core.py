@@ -4,12 +4,12 @@
 # While I could have stolen the minimax code from the above, I actually found this article on it (https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/) that both shows the code, and explains how it works.
 
 # https://geekflare.com/tic-tac-toe-python-code/
-import sys
-import numpy as np
-from math import inf as infinity
-import itertools
-import random
-import time
+# import sys
+# import numpy as np
+# from math import inf as infinity
+# import itertools
+# import random
+# import time
 
 
 class TicTacToe:
@@ -21,12 +21,25 @@ class TicTacToe:
         self.players = ['X', 'O']
 
 
-    def play_move(self, player, block_num):
-        if self.tic_tac_board[int((block_num - 1)/3)][(block_num - 1)%3] == ' ':
-            self.tic_tac_board[int((block_num - 1)/3)][(block_num - 1)%3] = player
+    def play_move(self, player, row, col):
+        if row - 1 > len(self.tic_tac_board):
+            row = int(input(f"That entry was not within our board limits, please choose a row within our limits: "))
+            col = int(input(f"That entry was not within our board limits, please choose a col within our limits: "))
+            self.play_move(player, row, col)
+        
+        if col - 1 > len(self.tic_tac_board):
+            row = int(input(f"That entry was not within our board limits, please choose a row within our limits: "))
+            col = int(input(f"That entry was not within our board limits, please choose a col within our limits: "))
+            self.play_move(player, row, col)
+
+        if self.tic_tac_board[row - 1][col - 1] == ' ':
+            self.tic_tac_board[row - 1][col - 1] = player
+        #if self.tic_tac_board[int((row - 1)/3)][(col - 1)%3] == ' ':
+        #    self.tic_tac_board[int((row - 1)/3)][(col - 1)%3] = player
         else:
-            block_num = int(input(f"Tile is not empty, chose again: "))
-            self.play_move(player, block_num)
+            row = int(input(f"Tile is not empty, chose new row: "))
+            col = int(input(f"Tile is not empty, chose new col: "))
+            self.play_move(player, row, col)
 
 
     def current_board(self):
@@ -107,16 +120,23 @@ class TicTacToe:
         while current_state == "Not Done":
             
             # Choose move (Validated to number)
-            choice = input((self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): ")
-            while not choice.isnumeric():
+            row_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Row to place in: ")
+            while not row_choice.isnumeric():
                 print("Your choice needs to be a number.")
-                choice = input((self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): ")
+                row_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Row to place in: ")
+            
+            col_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Col to place in: ")
+            while not col_choice.isnumeric():
+                print("Your choice needs to be a number.")
+                col_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Col to place in: ")
             '''
             block_choice = int(input(
                 str(self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): "))  
             '''
-            block_choice = int(choice)
-            self.play_move(self.players[current_player_idx], block_choice)
+            row = int(row_choice)
+            col = int(col_choice)
+
+            self.play_move(self.players[current_player_idx], row, col)
             self.print_board()
             current_state = self.current_board()
             
@@ -130,7 +150,6 @@ class TicTacToe:
             # print(self.players[current_player_idx])
             # print(str(self.players[current_player_idx]))
             
-            # TODO: Fix 'draw' state/end state problem
             if current_state == "Not Done":
                 current_player_idx = (current_player_idx + 1) % 2
             elif current_state == "Done":
