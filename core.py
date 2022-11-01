@@ -105,9 +105,17 @@ class TicTacToe:
 
         # Rungame
         while current_state == "Not Done":
-            # Choose move
+            
+            # Choose move (Validated to number)
+            choice = input((self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): ")
+            while not choice.isnumeric():
+                print("Your choice needs to be a number.")
+                choice = input((self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): ")
+            '''
             block_choice = int(input(
-                str(self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): "))
+                str(self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): "))  
+            '''
+            block_choice = int(choice)
             self.play_move(self.players[current_player_idx], block_choice)
             self.print_board()
             current_state = self.current_board()
