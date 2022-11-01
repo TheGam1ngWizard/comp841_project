@@ -22,20 +22,8 @@ class TicTacToe:
 
 
     def play_move(self, player, row, col):
-        if row - 1 > len(self.tic_tac_board):
-            row = int(input(f"That entry was not within our board limits, please choose a row within our limits: "))
-            col = int(input(f"That entry was not within our board limits, please choose a col within our limits: "))
-            self.play_move(player, row, col)
-        
-        if col - 1 > len(self.tic_tac_board):
-            row = int(input(f"That entry was not within our board limits, please choose a row within our limits: "))
-            col = int(input(f"That entry was not within our board limits, please choose a col within our limits: "))
-            self.play_move(player, row, col)
-
         if self.tic_tac_board[row - 1][col - 1] == ' ':
             self.tic_tac_board[row - 1][col - 1] = player
-        #if self.tic_tac_board[int((row - 1)/3)][(col - 1)%3] == ' ':
-        #    self.tic_tac_board[int((row - 1)/3)][(col - 1)%3] = player
         else:
             row = int(input(f"Tile is not empty, chose new row: "))
             col = int(input(f"Tile is not empty, chose new col: "))
@@ -118,8 +106,8 @@ class TicTacToe:
 
         # Rungame
         while current_state == "Not Done":
-            
-            # Choose move (Validated to number)
+            '''
+            # Choose move validator
             row_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Row to place in: ")
             while not row_choice.isnumeric():
                 print("Your choice needs to be a number.")
@@ -129,10 +117,41 @@ class TicTacToe:
             while not col_choice.isnumeric():
                 print("Your choice needs to be a number.")
                 col_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Col to place in: ")
+
+            while int(row_choice) > len(self.tic_tac_board):
+                print("Your choice needs to be within the size of the board.")
+                row_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Row to place in: ")
+
+            while int(col_choice) > len(self.tic_tac_board):
+                print("Your choice needs to be within the size of the board.")
+                col_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Col to place in: ")
+            '''
+
+            numeric = False
+            valid = False
+
+            while numeric != True and valid != True:
+                row_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Row to place in: ")
+                col_choice = input((self.players[current_player_idx]) + "'s Turn! Choose which Col to place in: ")
+
+                if row_choice.isnumeric() and col_choice.isnumeric():
+                    numeric = True
+                else:
+                    print(f"One of your choices weren't Numeric! Try again.")
+                    continue                
+                if int(row_choice) < len(self.tic_tac_board) and int(col_choice) < len(self.tic_tac_board):
+                    valid = True
+                else:
+                    print(f"One of your choices weren't within the bounds of the game! Try again.")
+                    continue
+                    
+
+
             '''
             block_choice = int(input(
                 str(self.players[current_player_idx]) + "'s Turn! Choose where to place (1 to 9): "))  
             '''
+
             row = int(row_choice)
             col = int(col_choice)
 
